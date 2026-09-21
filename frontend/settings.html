@@ -1,0 +1,706 @@
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>WaterCare - Settings</title>
+
+<style>
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+    }
+
+    body {
+        background: #f4f8fb;
+        color: #1f2937;
+    }
+
+    .topbar {
+        background: linear-gradient(135deg, #0077b6, #00a6d6);
+        color: white;
+        padding: 18px 25px;
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        font-size: 22px;
+        font-weight: bold;
+    }
+
+    .logo-icon {
+        width: 40px;
+        height: 40px;
+
+        border-radius: 50%;
+
+        background: white;
+        color: #0077b6;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        font-size: 22px;
+    }
+
+    .back-btn {
+        background: rgba(255,255,255,0.2);
+        color: white;
+
+        border: 1px solid rgba(255,255,255,0.5);
+
+        padding: 9px 16px;
+
+        border-radius: 8px;
+
+        cursor: pointer;
+    }
+
+    .container {
+        max-width: 800px;
+
+        margin: 30px auto;
+
+        padding: 0 20px;
+    }
+
+    .settings-card {
+        background: white;
+
+        border-radius: 18px;
+
+        box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+
+        overflow: hidden;
+    }
+
+    .settings-title {
+        padding: 25px;
+
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    .settings-title h1 {
+        color: #0077b6;
+    }
+
+    .settings-title p {
+        margin-top: 7px;
+        color: #6b7280;
+    }
+
+    .setting-item {
+        display: flex;
+
+        align-items: center;
+
+        justify-content: space-between;
+
+        padding: 20px 25px;
+
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    .setting-left {
+        display: flex;
+
+        align-items: center;
+
+        gap: 15px;
+    }
+
+    .setting-icon {
+        width: 45px;
+        height: 45px;
+
+        border-radius: 12px;
+
+        background: #e8f7fc;
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        font-size: 21px;
+    }
+
+    .setting-info h3 {
+        font-size: 16px;
+    }
+
+    .setting-info p {
+        margin-top: 5px;
+
+        color: #6b7280;
+
+        font-size: 13px;
+    }
+
+    .toggle {
+        width: 48px;
+        height: 26px;
+
+        position: relative;
+
+        cursor: pointer;
+    }
+
+    .toggle input {
+        display: none;
+    }
+
+    .slider {
+        position: absolute;
+
+        inset: 0;
+
+        background: #d1d5db;
+
+        border-radius: 30px;
+
+        transition: 0.3s;
+    }
+
+    .slider:before {
+        content: "";
+
+        position: absolute;
+
+        width: 20px;
+        height: 20px;
+
+        left: 3px;
+        top: 3px;
+
+        background: white;
+
+        border-radius: 50%;
+
+        transition: 0.3s;
+    }
+
+    .toggle input:checked + .slider {
+        background: #0077b6;
+    }
+
+    .toggle input:checked + .slider:before {
+        transform: translateX(22px);
+    }
+
+    select {
+        padding: 9px 12px;
+
+        border: 1px solid #d1d5db;
+
+        border-radius: 8px;
+
+        outline: none;
+    }
+
+    .action-button {
+        border: none;
+
+        background: #e8f7fc;
+
+        color: #0077b6;
+
+        padding: 10px 15px;
+
+        border-radius: 8px;
+
+        cursor: pointer;
+
+        font-weight: bold;
+    }
+
+    .action-button:hover {
+        background: #d4f0f8;
+    }
+
+    .logout-area {
+        padding: 25px;
+    }
+
+    .logout-button {
+        width: 100%;
+
+        padding: 14px;
+
+        border: none;
+
+        border-radius: 10px;
+
+        background: #dc2626;
+
+        color: white;
+
+        font-size: 16px;
+
+        font-weight: bold;
+
+        cursor: pointer;
+    }
+
+    .logout-button:hover {
+        background: #b91c1c;
+    }
+
+    .about {
+        text-align: center;
+
+        color: #6b7280;
+
+        font-size: 13px;
+
+        margin-top: 20px;
+
+        margin-bottom: 30px;
+    }
+
+    @media(max-width:600px) {
+
+        .topbar {
+            padding: 14px;
+        }
+
+        .setting-item {
+            padding: 17px;
+        }
+
+        .setting-info p {
+            max-width: 190px;
+        }
+
+    }
+
+</style>
+
+
+<div class="logo">
+
+    <div class="logo-icon">
+        💧
+    </div>
+
+    WaterCare
+
+</div>
+
+
+<button
+    class="back-btn"
+    onclick="goHome()"
+>
+    ← Home
+</button>
+
+
+<div class="settings-card">
+
+    <div class="settings-title">
+
+        <h1>⚙️ Settings</h1>
+
+        <p>
+            Manage your WaterCare app preferences
+        </p>
+
+    </div>
+
+
+    <div class="setting-item">
+
+        <div class="setting-left">
+
+            <div class="setting-icon">
+                🔔
+            </div>
+
+            <div class="setting-info">
+
+                <h3>Notifications</h3>
+
+                <p>
+                    Receive water safety alerts
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <label class="toggle">
+
+            <input
+                type="checkbox"
+                id="notifications"
+                checked
+                onchange="saveSetting('notifications', this.checked)"
+            >
+
+            <span class="slider"></span>
+
+        </label>
+
+    </div>
+
+
+    <div class="setting-item">
+
+        <div class="setting-left">
+
+            <div class="setting-icon">
+                🌐
+            </div>
+
+            <div class="setting-info">
+
+                <h3>Language</h3>
+
+                <p>
+                    Select your preferred language
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <select
+            id="language"
+            onchange="saveLanguage()"
+        >
+
+            <option value="English">
+                English
+            </option>
+
+            <option value="Kannada">
+                Kannada
+            </option>
+
+            <option value="Hindi">
+                Hindi
+            </option>
+
+            <option value="Telugu">
+                Telugu
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <div class="setting-item">
+
+        <div class="setting-left">
+
+            <div class="setting-icon">
+                🔒
+            </div>
+
+            <div class="setting-info">
+
+                <h3>Privacy</h3>
+
+                <p>
+                    Manage your personal information
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <button
+            class="action-button"
+            onclick="showPrivacy()"
+        >
+            View
+        </button>
+
+    </div>
+
+
+    <div class="setting-item">
+
+        <div class="setting-left">
+
+            <div class="setting-icon">
+                🔑
+            </div>
+
+            <div class="setting-info">
+
+                <h3>Change Password</h3>
+
+                <p>
+                    Update your account password
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <button
+            class="action-button"
+            onclick="changePassword()"
+        >
+            Change
+        </button>
+
+    </div>
+
+
+    <div class="setting-item">
+
+        <div class="setting-left">
+
+            <div class="setting-icon">
+                ℹ️
+            </div>
+
+            <div class="setting-info">
+
+                <h3>About WaterCare</h3>
+
+                <p>
+                    Learn about the WaterCare project
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <button
+            class="action-button"
+            onclick="aboutWaterCare()"
+        >
+            View
+        </button>
+
+    </div>
+
+
+    <div class="logout-area">
+
+        <button
+            class="logout-button"
+            onclick="logout()"
+        >
+            🚪 Logout
+        </button>
+
+    </div>
+
+</div>
+
+
+<div class="about">
+
+    WaterCare 💧
+
+    <br>
+
+    Smart Water Safety and Monitoring Platform
+
+    <br>
+
+    Version 1.0
+
+</div>
+
+
+<script>
+
+
+function saveSetting(
+    setting,
+    value
+) {
+
+    localStorage.setItem(
+        "watercare_" + setting,
+        value
+    );
+
+
+    if (setting === "notifications") {
+
+        alert(
+            value
+            ? "Notifications enabled."
+            : "Notifications disabled."
+        );
+
+    }
+
+}
+
+
+function saveLanguage() {
+
+    const language =
+        document.getElementById(
+            "language"
+        ).value;
+
+
+    localStorage.setItem(
+        "watercare_language",
+        language
+    );
+
+
+    alert(
+        "Language saved as "
+        + language
+        + "."
+    );
+
+}
+
+
+function loadSettings() {
+
+    const notifications =
+        localStorage.getItem(
+            "watercare_notifications"
+        );
+
+
+    if (
+        notifications !== null
+    ) {
+
+        document.getElementById(
+            "notifications"
+        ).checked =
+            notifications === "true";
+
+    }
+
+
+    const language =
+        localStorage.getItem(
+            "watercare_language"
+        );
+
+
+    if (language) {
+
+        document.getElementById(
+            "language"
+        ).value =
+            language;
+
+    }
+
+}
+
+
+function showPrivacy() {
+
+    alert(
+        "Your WaterCare profile and assessment information are stored locally in your browser for this project."
+    );
+
+}
+
+
+function changePassword() {
+
+    const newPassword =
+        prompt(
+            "Enter your new password:"
+        );
+
+
+    if (!newPassword) {
+
+        return;
+
+    }
+
+
+    if (
+        newPassword.length < 4
+    ) {
+
+        alert(
+            "Password must contain at least 4 characters."
+        );
+
+        return;
+
+    }
+
+
+    localStorage.setItem(
+        "watercarePassword",
+        newPassword
+    );
+
+
+    alert(
+        "Password changed successfully."
+    );
+
+}
+
+
+function aboutWaterCare() {
+
+    alert(
+        "WaterCare is a Smart Water Safety and Monitoring Platform designed to help users monitor water information and assess water-health risks."
+    );
+
+}
+
+
+function goHome() {
+
+    window.location.href =
+        "home.html";
+
+}
+
+
+function logout() {
+
+    localStorage.removeItem(
+        "watercareLoggedIn"
+    );
+
+    localStorage.removeItem(
+        "watercareUserName"
+    );
+
+    localStorage.removeItem(
+        "riskResult"
+    );
+
+    window.location.href =
+        "thankyou.html";
+
+}
+
+
+loadSettings();
+
+</script>

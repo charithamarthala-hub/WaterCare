@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Water Source - WaterCare</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+    <div class="logo">
+        💧 WaterCare
+    </div>
+
+
+    <nav>
+
+        <a href="home.html">
+            Home
+        </a>
+
+        <a href="profile.html">
+            Profile
+        </a>
+
+        <a href="settings.html">
+            Settings
+        </a>
+
+        <button
+            class="logout-btn"
+            onclick="logout()"
+        >
+            Logout
+        </button>
+
+    </nav>
+
+
+    <div class="form-card">
+
+        <h1>
+            💧 Water Source
+        </h1>
+
+        <p class="subtitle">
+            Enter your water-quality information.
+        </p>
+
+
+        <form id="waterForm">
+
+
+            <label>
+                Water Source
+            </label>
+
+            <select
+                id="source"
+                required
+            >
+
+                <option value="">
+                    Select Water Source
+                </option>
+
+                <option value="Tap Water">
+                    Tap Water
+                </option>
+
+                <option value="Borewell Water">
+                    Borewell Water
+                </option>
+
+                <option value="Well Water">
+                    Well Water
+                </option>
+
+                <option value="River Water">
+                    River Water
+                </option>
+
+                <option value="Lake Water">
+                    Lake Water
+                </option>
+
+                <option value="Rainwater">
+                    Rainwater
+                </option>
+
+            </select>
+
+
+            <label>
+                Water Appearance
+            </label>
+
+            <select
+                id="appearance"
+                required
+            >
+
+                <option value="">
+                    Select Appearance
+                </option>
+
+                <option value="Clear">
+                    Clear
+                </option>
+
+                <option value="Slightly Cloudy">
+                    Slightly Cloudy
+                </option>
+
+                <option value="Cloudy">
+                    Cloudy
+                </option>
+
+                <option value="Discolored">
+                    Discolored
+                </option>
+
+            </select>
+
+
+            <label>
+                Water Odor
+            </label>
+
+            <select
+                id="odor"
+                required
+            >
+
+                <option value="">
+                    Select Odor
+                </option>
+
+                <option value="No unusual odor">
+                    No unusual odor
+                </option>
+
+                <option value="Mild unusual odor">
+                    Mild unusual odor
+                </option>
+
+                <option value="Strong unusual odor">
+                    Strong unusual odor
+                </option>
+
+            </select>
+
+
+            <label>
+                Water Treatment
+            </label>
+
+            <select
+                id="treatment"
+                required
+            >
+
+                <option value="">
+                    Select Treatment
+                </option>
+
+                <option value="Water Filter">
+                    Water Filter
+                </option>
+
+                <option value="Boiling">
+                    Boiling
+                </option>
+
+                <option value="Water Purifier">
+                    Water Purifier
+                </option>
+
+                <option value="No Treatment">
+                    No Treatment
+                </option>
+
+            </select>
+
+
+            <label>
+                pH Value
+            </label>
+
+            <input
+                type="number"
+                id="ph"
+                min="0"
+                max="14"
+                step="0.1"
+                required
+            >
+
+
+            <label>
+                Last Water Test Date
+            </label>
+
+            <input
+                type="date"
+                id="testDate"
+            >
+
+
+            <button
+                type="submit"
+                class="btn full"
+            >
+                Save Water Information
+            </button>
+
+        </form>
+
+
+        <div id="message"></div>
+
+
+        <div class="actions">
+
+            <a
+                href="ai-risk.html"
+                class="btn"
+            >
+                Continue to AI Risk →
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <script src="js/app.js"></script>
+
+
+    <script>
+
+        document
+            .getElementById("waterForm")
+            .addEventListener(
+                "submit",
+                function(event) {
+
+                    event.preventDefault();
+
+
+                    const source =
+                        document.getElementById(
+                            "source"
+                        ).value;
+
+
+                    const appearance =
+                        document.getElementById(
+                            "appearance"
+                        ).value;
+
+
+                    const odor =
+                        document.getElementById(
+                            "odor"
+                        ).value;
+
+
+                    const treatment =
+                        document.getElementById(
+                            "treatment"
+                        ).value;
+
+
+                    const ph =
+                        document.getElementById(
+                            "ph"
+                        ).value;
+
+
+                    const testDate =
+                        document.getElementById(
+                            "testDate"
+                        ).value;
+
+
+                    const message =
+                        document.getElementById(
+                            "message"
+                        );
+
+
+                    if (
+                        source === "" ||
+                        appearance === "" ||
+                        odor === "" ||
+                        treatment === "" ||
+                        ph === ""
+                    ) {
+
+                        message.innerHTML =
+                            "<p>Please complete all required fields.</p>";
+
+                        return;
+                    }
+
+
+                    const waterData = {
+
+                        source: source,
+
+                        appearance: appearance,
+
+                        odor: odor,
+
+                        treatment: treatment,
+
+                        ph: ph,
+
+                        testDate: testDate
+
+                    };
+
+
+                    console.log(
+                        "Sending water information:",
+                        waterData
+                    );
+
+
+                    fetch(
+                        "/api/water-source",
+                        {
+
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body:
+                                JSON.stringify(
+                                    waterData
+                                )
+
+                        }
+                    )
+
+                    .then(function(response) {
+
+                        return response.json();
+
+                    })
+
+                    .then(function(data) {
+
+                        console.log(
+                            "Backend response:",
+                            data
+                        );
+
+
+                        if (
+                            data.status ===
+                            "success"
+                        ) {
+
+                            message.innerHTML =
+                                "<p>" +
+                                data.message +
+                                "</p>";
+
+
+                            // Store a copy in browser
+                            localStorage.setItem(
+                                "waterInformation",
+                                JSON.stringify(
+                                    waterData
+                                )
+                            );
+
+                        } else {
+
+                            message.innerHTML =
+                                "<p>" +
+                                (
+                                    data.message ||
+                                    "Unable to save water information."
+                                ) +
+                                "</p>";
+
+                        }
+
+                    })
+
+                    .catch(function(error) {
+
+                        console.error(
+                            "Water Source Error:",
+                            error
+                        );
+
+
+                        message.innerHTML =
+                            "<p>Unable to connect to WaterCare backend.</p>";
+
+                    });
+
+                }
+            );
+
+    </script>
+
+</body>
+
+</html>

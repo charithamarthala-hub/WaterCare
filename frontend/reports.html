@@ -1,0 +1,158 @@
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Reports - WaterCare</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+
+<div class="logo">
+    💧 WaterCare
+</div>
+
+<nav>
+
+    <a href="home.html">Home</a>
+
+    <button
+        class="logout-btn"
+        onclick="logout()"
+    >
+        Logout
+    </button>
+
+</nav>
+
+
+<div class="card">
+
+    <h1 class="center">
+        📄 WaterCare Report
+    </h1>
+
+    <p class="subtitle">
+        Latest assessment summary
+    </p>
+
+
+    <div id="report"></div>
+
+
+    <div class="actions">
+
+        <button
+            class="btn"
+            onclick="window.print()"
+        >
+            Print Report
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+
+const report =
+    document.getElementById(
+        "report"
+    );
+
+
+const storedResult =
+    localStorage.getItem(
+        "riskResult"
+    );
+
+
+if (storedResult) {
+
+    try {
+
+        const data =
+            JSON.parse(
+                storedResult
+            );
+
+
+        report.innerHTML =
+
+            "<div class=\"recommendation\">"
+
+            +
+
+            "<h3>"
+            + "📊 Risk Assessment"
+            + "</h3>"
+
+            +
+
+            "<p>"
+            + "<strong>Risk Level:</strong> "
+            + data.riskLevel
+            + "</p>"
+
+            +
+
+            "<p>"
+            + "<strong>Risk Score:</strong> "
+            + data.score
+            + "</p>"
+
+            +
+
+            "<p>"
+            + "<strong>Assessment:</strong> "
+            + data.message
+            + "</p>"
+
+            +
+
+            "</div>";
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        report.innerHTML =
+
+            "<p>"
+            + "Unable to load the report."
+            + "</p>";
+    }
+
+}
+
+else {
+
+    report.innerHTML =
+
+        "<p>"
+        + "No assessment report is available yet."
+        + "</p>";
+}
+
+
+function logout() {
+
+    localStorage.removeItem(
+        "watercareLoggedIn"
+    );
+
+    localStorage.removeItem(
+        "watercareUserName"
+    );
+
+    localStorage.removeItem(
+        "riskResult"
+    );
+
+    window.location.href =
+        "thankyou.html";
+}
+
+</script>

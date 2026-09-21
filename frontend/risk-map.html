@@ -1,0 +1,92 @@
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Risk Map - WaterCare</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+
+<div class="logo">
+    💧 WaterCare
+</div>
+
+<nav>
+
+    <a href="home.html">Home</a>
+
+    <a href="ai-risk.html">AI Risk</a>
+
+    <button
+        class="logout-btn"
+        onclick="logout()"
+    >
+        Logout
+    </button>
+
+</nav>
+
+
+<div class="card">
+
+    <h1 class="center">
+        🗺️ Water Health Risk Map
+    </h1>
+
+    <p class="subtitle">
+        Demonstration risk zones for the project.
+    </p>
+
+
+    <div class="map-area">
+
+        <div class="map-zone low">
+            🟢
+            <strong>Low Risk Zone</strong>
+            <p>
+                Good monitoring conditions.
+            </p>
+        </div>
+
+
+        <div class="map-zone moderate">
+            🟡
+            <strong>Moderate Risk Zone</strong>
+            <p>
+                Additional monitoring recommended.
+            </p>
+        </div>
+
+
+        <div class="map-zone high">
+            🔴
+            <strong>High Risk Zone</strong>
+            <p>
+                Further water-quality investigation recommended.
+            </p>
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+function logout() {
+
+    localStorage.removeItem(
+        "watercareLoggedIn"
+    );
+
+    localStorage.removeItem(
+        "watercareUserName"
+    );
+
+    window.location.href =
+        "thankyou.html";
+}
+
+</script>
+

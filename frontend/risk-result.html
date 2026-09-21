@@ -1,0 +1,138 @@
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Risk Result - WaterCare</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+
+<div class="logo">
+    💧 WaterCare
+</div>
+
+<nav>
+
+    <a href="home.html">
+        Home
+    </a>
+
+    <button
+        class="logout-btn"
+        onclick="logout()"
+    >
+        Logout
+    </button>
+
+</nav>
+
+
+<div class="form-card center">
+
+    <h1>
+        📊 Water Health Risk Result
+    </h1>
+
+    <p class="subtitle">
+        Your assessment result
+    </p>
+
+
+    <div
+        id="result"
+        class="risk-result"
+    ></div>
+
+
+    <div class="actions">
+
+        <a
+            href="recommendations.html"
+            class="btn"
+        >
+            View Recommendations
+        </a>
+
+        <a
+            href="health-history.html"
+            class="btn secondary"
+        >
+            Health History
+        </a>
+
+    </div>
+
+</div>
+
+
+<script>
+
+const result =
+    document.getElementById("result");
+
+
+const storedResult =
+    localStorage.getItem("riskResult");
+
+
+if (storedResult) {
+
+    try {
+
+        const data =
+            JSON.parse(storedResult);
+
+
+        result.innerHTML =
+
+            "<h2>"
+            + data.riskLevel
+            + "</h2>" +
+
+            "<p>"
+            + data.message
+            + "</p>" +
+
+            "<p>"
+            + "<strong>Risk Score:</strong> "
+            + data.score
+            + "</p>";
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        result.innerHTML =
+            "<p>Unable to display the assessment result.</p>";
+
+    }
+
+} else {
+
+    result.innerHTML =
+
+        "<p>"
+        + "No risk assessment result is available yet."
+        + "</p>";
+
+}
+
+
+function logout() {
+
+    localStorage.removeItem(
+        "watercareLoggedIn"
+    );
+
+    localStorage.removeItem(
+        "watercareUserName"
+    );
+
+    window.location.href =
+        "thankyou.html";
+}
+
+</script>
+

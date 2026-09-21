@@ -1,0 +1,210 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Symptom Checker - WaterCare</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+
+<div class="logo">💧 WaterCare</div>
+
+<nav>
+
+    <a href="home.html">Home</a>
+
+    <a href="water-source.html">Water Source</a>
+
+    <button
+        class="logout-btn"
+        onclick="logout()"
+    >
+        Logout
+    </button>
+
+</nav>
+
+
+<div class="form-card">
+
+    <h1>
+        🩺 Symptom Checker
+    </h1>
+
+    <p class="subtitle">
+        Select the symptoms you are experiencing.
+    </p>
+
+
+    <form id="symptomForm">
+
+        <label>
+            Stomach discomfort
+        </label>
+
+        <select id="stomach">
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+        </select>
+
+
+        <label>
+            Diarrhea
+        </label>
+
+        <select id="diarrhea">
+            <option value="0">No</option>
+            <option value="2">Yes</option>
+        </select>
+
+
+        <label>
+            Vomiting
+        </label>
+
+        <select id="vomiting">
+            <option value="0">No</option>
+            <option value="2">Yes</option>
+        </select>
+
+
+        <label>
+            Fever
+        </label>
+
+        <select id="fever">
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+        </select>
+
+
+        <button
+            class="btn full"
+            type="submit"
+        >
+            Check Symptoms
+        </button>
+
+    </form>
+
+
+    <div id="result"></div>
+
+
+    <div class="actions">
+
+        <a
+            href="water-source.html"
+            class="btn"
+        >
+            Continue to Water Source →
+        </a>
+
+    </div>
+
+</div>
+
+
+<script>
+
+document.getElementById("symptomForm")
+    .addEventListener("submit", async function(event) {
+
+        event.preventDefault();
+
+
+        const stomach =
+            document.getElementById("stomach").value;
+
+        const diarrhea =
+            document.getElementById("diarrhea").value;
+
+        const vomiting =
+            document.getElementById("vomiting").value;
+
+        const fever =
+            document.getElementById("fever").value;
+
+
+        const result =
+            document.getElementById("result");
+
+
+        result.textContent =
+            "Checking symptoms...";
+
+
+        try {
+
+            const response =
+                await fetch(
+                    "/api/symptoms",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body: JSON.stringify({
+
+                            stomach: stomach,
+                            diarrhea: diarrhea,
+                            vomiting: vomiting,
+                            fever: fever
+
+                        })
+                    }
+                );
+
+
+            const data =
+                await response.json();
+
+
+            if (data.status === "success") {
+
+                result.innerHTML =
+                    "<h3>" +
+                    data.level +
+                    "</h3>" +
+
+                    "<p>" +
+                    data.message +
+                    "</p>";
+
+            } else {
+
+                result.textContent =
+                    data.message;
+
+            }
+
+        } catch (error) {
+
+            console.error(error);
+
+            result.textContent =
+                "Unable to connect to WaterCare server.";
+
+        }
+
+    });
+
+
+function logout() {
+
+    localStorage.removeItem(
+        "watercareLoggedIn"
+    );
+
+    localStorage.removeItem(
+        "watercareUserName"
+    );
+
+    window.location.href =
+        "thankyou.html";
+}
+
+</script>
+

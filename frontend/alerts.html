@@ -1,0 +1,104 @@
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Alerts - WaterCare</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+
+<div class="logo">
+    💧 WaterCare
+</div>
+
+<nav>
+
+    <a href="home.html">Home</a>
+
+    <button
+        class="logout-btn"
+        onclick="logout()"
+    >
+        Logout
+    </button>
+
+</nav>
+
+
+<div class="card">
+
+    <h1 class="center">
+        🔔 WaterCare Alerts
+    </h1>
+
+    <p class="subtitle">
+        Important water-health reminders.
+    </p>
+
+
+    <div class="recommendation">
+
+        <h3>
+            💧 Water Quality Reminder
+        </h3>
+
+        <p>
+            Check your water source and
+            treatment regularly.
+        </p>
+
+    </div>
+
+
+    <div class="recommendation">
+
+        <h3>
+            🧪 Testing Reminder
+        </h3>
+
+        <p>
+            Periodic water-quality testing
+            can help you monitor changes.
+        </p>
+
+    </div>
+
+
+    <div class="recommendation">
+
+        <h3>
+            🧼 Storage Reminder
+        </h3>
+
+        <p>
+            Keep water containers clean
+            and properly covered.
+        </p>
+
+    </div>
+
+</div>
+
+
+<script>
+
+function logout() {
+
+    localStorage.removeItem(
+        "watercareLoggedIn"
+    );
+
+    localStorage.removeItem(
+        "watercareUserName"
+    );
+
+    localStorage.removeItem(
+        "riskResult"
+    );
+
+    window.location.href =
+        "thankyou.html";
+}
+
+</script>

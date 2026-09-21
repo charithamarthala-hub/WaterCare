@@ -1,0 +1,163 @@
+<div class="big-logo">
+    💧
+</div>
+
+<h1>Create Account</h1>
+
+<p class="subtitle">
+    Join WaterCare
+</p>
+
+
+<form id="signupForm">
+
+    <label>Full Name</label>
+
+    <input
+        type="text"
+        id="name"
+        required
+    >
+
+
+    <label>Email</label>
+
+    <input
+        type="email"
+        id="email"
+        required
+    >
+
+
+    <label>Password</label>
+
+    <input
+        type="password"
+        id="password"
+        minlength="4"
+        required
+    >
+
+
+    <label>Confirm Password</label>
+
+    <input
+        type="password"
+        id="confirmPassword"
+        minlength="4"
+        required
+    >
+
+
+    <button
+        type="submit"
+        class="btn full"
+    >
+        Create Account
+    </button>
+
+</form>
+
+
+<div id="message"></div>
+
+
+<div class="form-links">
+
+    <a href="login.html">
+        Already have an account? Login
+    </a>
+
+</div>
+
+
+<script>
+
+document.getElementById("signupForm").addEventListener(
+    "submit",
+    async function(event) {
+
+        event.preventDefault();
+
+
+        const name =
+            document.getElementById("name").value.trim();
+
+        const email =
+            document.getElementById("email").value.trim();
+
+        const password =
+            document.getElementById("password").value;
+
+        const confirmPassword =
+            document.getElementById("confirmPassword").value;
+
+        const message =
+            document.getElementById("message");
+
+
+        if (password !== confirmPassword) {
+
+            message.innerHTML =
+                "Passwords do not match.";
+
+            return;
+
+        }
+
+
+        try {
+
+            const response = await fetch(
+                "http://localhost:8080/api/signup",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        name: name,
+                        email: email,
+                        password: password
+                    })
+                }
+            );
+
+
+            const result =
+                await response.text();
+
+
+            if (response.ok) {
+
+                message.innerHTML =
+                    result || "Account created successfully!";
+
+                document.getElementById(
+                    "signupForm"
+                ).reset();
+
+            } else {
+
+                message.innerHTML =
+                    result || "Signup failed.";
+
+            }
+
+
+        } catch (error) {
+
+            message.innerHTML =
+                "Unable to connect to WaterCare backend.";
+
+            console.error(error);
+
+        }
+
+    }
+
+);
+
+</script>

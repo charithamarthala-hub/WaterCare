@@ -1,0 +1,190 @@
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Recommendations - WaterCare</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+
+<div class="logo">
+    💧 WaterCare
+</div>
+
+<nav>
+
+    <a href="home.html">
+        Home
+    </a>
+
+    <a href="risk-result.html">
+        Risk Result
+    </a>
+
+    <button
+        class="logout-btn"
+        onclick="logout()"
+    >
+        Logout
+    </button>
+
+</nav>
+
+
+<div class="form-card">
+
+    <h1>
+        💡 Water Health Recommendations
+    </h1>
+
+    <p class="subtitle">
+        Recommendations based on your assessment.
+    </p>
+
+
+    <div
+        id="recommendationResult"
+        class="saved-box"
+    ></div>
+
+
+    <div class="actions">
+
+        <a
+            href="alerts.html"
+            class="btn"
+        >
+            View Alerts →
+        </a>
+
+        <a
+            href="health-history.html"
+            class="btn secondary"
+        >
+            Health History
+        </a>
+
+    </div>
+
+</div>
+
+
+<script>
+
+const recommendationResult =
+    document.getElementById(
+        "recommendationResult"
+    );
+
+
+const storedResult =
+    localStorage.getItem(
+        "riskResult"
+    );
+
+
+if (storedResult) {
+
+    try {
+
+        const data =
+            JSON.parse(
+                storedResult
+            );
+
+
+        let recommendation;
+
+
+        if (
+            data.riskLevel ===
+            "High Risk"
+        ) {
+
+            recommendation =
+                "Please discuss concerning or worsening symptoms with a parent, guardian, or health professional. Consider checking your water quality with a reliable test and follow appropriate water-treatment guidance.";
+
+        }
+
+        else if (
+            data.riskLevel ===
+            "Moderate Risk"
+        ) {
+
+            recommendation =
+                "Continue monitoring your symptoms and water quality. Make sure your water is appropriately treated and consider further testing if concerns continue.";
+
+        }
+
+        else {
+
+            recommendation =
+                "Continue regular water-quality monitoring, maintain appropriate water treatment, and keep monitoring your health.";
+        }
+
+
+        recommendationResult.innerHTML =
+
+            "<h2>"
+            + data.riskLevel
+            + "</h2>"
+
+            +
+
+            "<p>"
+            + recommendation
+            + "</p>"
+
+            +
+
+            "<p>"
+            + "<strong>Risk Score:</strong> "
+            + data.score
+            + "</p>";
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        recommendationResult.innerHTML =
+
+            "<p>"
+            + "Unable to load recommendations."
+            + "</p>";
+    }
+
+}
+
+else {
+
+    recommendationResult.innerHTML =
+
+        "<p>"
+        + "Complete an AI Risk Assessment "
+        + "to receive recommendations."
+        + "</p>";
+}
+
+
+function logout() {
+
+    localStorage.removeItem(
+        "watercareLoggedIn"
+    );
+
+    localStorage.removeItem(
+        "watercareUserName"
+    );
+
+    localStorage.removeItem(
+        "riskResult"
+    );
+
+    window.location.href =
+        "thankyou.html";
+}
+
+</script>
+

@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Home - WaterCare</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+<header class="navbar">
+
+    <div class="logo">
+        💧 WaterCare
+    </div>
+
+
+    <nav>
+
+        <a href="home.html">
+            Home
+        </a>
+
+        <a href="profile.html">
+            Profile
+        </a>
+
+        <a href="settings.html">
+            Settings
+        </a>
+
+        <button
+            class="logout-btn"
+            onclick="logout()"
+        >
+            Logout
+        </button>
+
+    </nav>
+
+</header>
+
+
+<section class="home-hero">
+
+    <h1>
+        Welcome to WaterCare 💧
+    </h1>
+
+    <p>
+        Smart water-health monitoring and
+        risk assessment platform.
+    </p>
+
+</section>
+
+
+<section class="section">
+
+    <h2>
+        WaterCare Services
+    </h2>
+
+    <p class="section-description">
+        Select any service below.
+    </p>
+
+
+    <div class="service-grid">
+
+
+        <a
+            href="symptom-checker.html"
+            class="service-card"
+        >
+
+            <div class="service-icon">
+                🩺
+            </div>
+
+            <h3>
+                Symptom Checker
+            </h3>
+
+            <p>
+                Check common symptoms and
+                receive general guidance.
+            </p>
+
+            <span>
+                Open →
+            </span>
+
+        </a>
+
+
+        <a
+            href="water-source.html"
+            class="service-card"
+        >
+
+            <div class="service-icon">
+                💧
+            </div>
+
+            <h3>
+                Water Source
+            </h3>
+
+            <p>
+                Enter your water source and
+                water-quality information.
+            </p>
+
+            <span>
+                Open →
+            </span>
+
+        </a>
+
+
+        <a
+            href="risk-map.html"
+            class="service-card"
+        >
+
+            <div class="service-icon">
+                🗺️
+            </div>
+
+            <h3>
+                Risk Map
+            </h3>
+
+            <p>
+                Explore water-health risk
+                information.
+            </p>
+
+            <span>
+                Open →
+            </span>
+
+        </a>
+
+
+        <a
+            href="ai-risk.html"
+            class="service-card"
+        >
+
+            <div class="service-icon">
+                🤖
+            </div>
+
+            <h3>
+                AI Risk Assessment
+            </h3>
+
+            <p>
+                Analyze water and health
+                information together.
+            </p>
+
+            <span>
+                Open →
+            </span>
+
+        </a>
+
+
+        <a
+            href="risk-result.html"
+            class="service-card"
+        >
+
+            <div class="service-icon">
+                📊
+            </div>
+
+            <h3>
+                Risk Result
+            </h3>
+
+            <p>
+                View your latest risk assessment.
+            </p>
+
+            <span>
+                Open →
+            </span>
+
+        </a>
+
+
+        <a
+            href="recommendations.html"
+            class="service-card"
+        >
+
+            <div class="service-icon">
+                💡
+            </div>
+
+            <h3>
+                Recommendations
+            </h3>
+
+            <p>
+                View water-health recommendations.
+            </p>
+
+            <span>
+                Open →
+            </span>
+
+        </a>
+
+
+        <a
+            href="alerts.html"
+            class="service-card"
+        >
+
+            <div class="service-icon">
+                🔔
+            </div>
+
+            <h3>
+                Alerts
+            </h3>
+
+            <p>
+                View important alerts and reminders.
+            </p>
+
+            <span>
+                Open →
+            </span>
+
+        </a>
+
+
+        <a
+            href="health-history.html"
+            class="service-card"
+        >
+
+            <div class="service-icon">
+                📋
+            </div>
+
+            <h3>
+                Health History
+            </h3>
+
+            <p>
+                View previous assessments.
+            </p>
+
+            <span>
+                Open →
+            </span>
+
+        </a>
+
+
+        <a
+            href="reports.html"
+            class="service-card"
+        >
+
+            <div class="service-icon">
+                📄
+            </div>
+
+            <h3>
+                Reports
+            </h3>
+
+            <p>
+                View your WaterCare reports.
+            </p>
+
+            <span>
+                Open →
+            </span>
+
+        </a>
+
+    </div>
+
+</section>
+
+
+<section class="section">
+
+    <div class="flow-card">
+
+        <h2>
+            Recommended Assessment Flow
+        </h2>
+
+
+        <div class="flow">
+
+            <div>
+                💧
+                <strong>Water Source</strong>
+            </div>
+
+            <span>→</span>
+
+            <div>
+                🤖
+                <strong>AI Risk</strong>
+            </div>
+
+            <span>→</span>
+
+            <div>
+                📊
+                <strong>Risk Result</strong>
+            </div>
+
+            <span>→</span>
+
+            <div>
+                💡
+                <strong>Recommendations</strong>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<footer>
+    © 2026 WaterCare. All rights reserved.
+</footer>
+
+
+<script src="js/app.js"></script>
+
+</body>
+</html>
+<script>
+
+function logout() {
+
+    localStorage.removeItem("watercareLoggedIn");
+
+    window.location.href = "thankyou.html";
+
+}
+
+</script>
+

@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>AI Risk Assessment - WaterCare</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+    <div class="logo">
+        💧 WaterCare
+    </div>
+
+    <nav>
+
+        <a href="home.html">
+            Home
+        </a>
+
+        <a href="water-source.html">
+            Water Source
+        </a>
+
+        <button
+            class="logout-btn"
+            onclick="logout()"
+        >
+            Logout
+        </button>
+
+    </nav>
+
+
+    <div class="form-card">
+
+        <h1>
+            🤖 AI Risk Assessment
+        </h1>
+
+        <p class="subtitle">
+            Review your water information and health information.
+        </p>
+
+
+        <div
+            id="savedWater"
+            class="saved-box"
+        >
+            Loading saved water information...
+        </div>
+
+
+        <form id="riskForm">
+
+
+            <label>
+                Current Symptoms
+            </label>
+
+            <select id="symptoms" required>
+
+                <option value="">
+                    Select
+                </option>
+
+                <option value="0">
+                    No symptoms
+                </option>
+
+                <option value="1">
+                    Mild symptoms
+                </option>
+
+                <option value="2">
+                    Multiple symptoms
+                </option>
+
+            </select>
+
+
+            <label>
+                Duration
+            </label>
+
+            <select id="duration" required>
+
+                <option value="">
+                    Select
+                </option>
+
+                <option value="0">
+                    No symptoms
+                </option>
+
+                <option value="1">
+                    One day
+                </option>
+
+                <option value="2">
+                    Several days
+                </option>
+
+                <option value="3">
+                    More than a week
+                </option>
+
+            </select>
+
+
+            <label>
+                Are symptoms getting worse?
+            </label>
+
+            <select id="worse" required>
+
+                <option value="">
+                    Select
+                </option>
+
+                <option value="0">
+                    No
+                </option>
+
+                <option value="1">
+                    Not sure
+                </option>
+
+                <option value="2">
+                    Yes
+                </option>
+
+            </select>
+
+
+            <button
+                type="submit"
+                class="btn full"
+            >
+                Generate Risk Assessment
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <script src="js/app.js"></script>
+
+
+    <script>
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+
+                loadSavedWater();
+
+            }
+        );
+
+
+        function loadSavedWater() {
+
+            const savedWater =
+                document.getElementById(
+                    "savedWater"
+                );
+
+
+            fetch("/api/water-source/latest")
+
+                .then(function (response) {
+
+                    if (!response.ok) {
+
+                        throw new Error(
+                            "Water information not found"
+                        );
+
+                    }
+
+                    return response.json();
+
+                })
+
+                .then(function (data) {
+
+                    if (
+                        !data ||
+                        data.status !== "success"
+                    ) {
+
+                        savedWater.innerHTML =
+                            "<p>Water information not found.</p>";
+
+                        return;
+                    }
+
+
+                    savedWater.innerHTML =
+
+                        "<h3>💧 Saved Water Information</h3>" +
+
+                        "<p><strong>Water Source:</strong> "
+                        + data.source +
+                        "</p>" +
+
+                        "<p><strong>Appearance:</strong> "
+                        + data.appearance +
+                        "</p>" +
+
+                        "<p><strong>Odor:</strong> "
+                        + data.odor +
+                        "</p>" +
+
+                        "<p><strong>Treatment:</strong> "
+                        + data.treatment +
+                        "</p>" +
+
+                        "<p><strong>pH:</strong> "
+                        + data.ph +
+                        "</p>" +
+
+                        "<p><strong>Test Date:</strong> "
+                        + (
+                            data.testDate
+                            ? data.testDate
+                            : "Not provided"
+                        ) +
+                        "</p>";
+
+                })
+
+                .catch(function (error) {
+
+                    console.log(
+                        "Water information error:",
+                        error
+                    );
+
+                    savedWater.innerHTML =
+
+                        "<p>Water information not found.</p>" +
+
+                        "<p>Please go back to Water Source, " +
+                        "save the information, and return here.</p>";
+
+                });
+
+        }
+
+
+        document
+            .getElementById("riskForm")
+            .addEventListener(
+                "submit",
+                function (event) {
+
+                    event.preventDefault();
+
+
+                    const symptoms =
+                        document.getElementById(
+                            "symptoms"
+                        ).value;
+
+
+                    const duration =
+                        document.getElementById(
+                            "duration"
+                        ).value;
+
+
+                    const worse =
+                        document.getElementById(
+                            "worse"
+                        ).value;
+
+
+                    if (
+                        symptoms === "" ||
+                        duration === "" ||
+                        worse === ""
+                    ) {
+
+                        alert(
+                            "Please complete all fields."
+                        );
+
+                        return;
+                    }
+
+
+                    fetch("/api/assess", {
+
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body: JSON.stringify({
+
+                            symptoms:
+                                Number(symptoms),
+
+                            duration:
+                                Number(duration),
+
+                            worse:
+                                Number(worse)
+
+                        })
+
+                    })
+
+                    .then(function (response) {
+
+                        return response.json();
+
+                    })
+
+                    .then(function (data) {
+
+                        if (
+                            data.status ===
+                            "success"
+                        ) {
+
+                            localStorage.setItem(
+                                "riskResult",
+                                JSON.stringify(data)
+                            );
+
+
+                            window.location.href =
+                                "risk-result.html";
+
+                        } else {
+
+                            alert(
+                                data.message ||
+                                "Unable to generate risk assessment."
+                            );
+
+                        }
+
+                    })
+
+                    .catch(function (error) {
+
+                        console.log(error);
+
+                        alert(
+                            "Unable to connect to WaterCare backend."
+                        );
+
+                    });
+
+                }
+            );
+
+    </script>
+
+</body>
+
+</html>

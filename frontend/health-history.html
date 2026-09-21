@@ -1,0 +1,168 @@
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Health History - WaterCare</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+
+<div class="logo">
+    💧 WaterCare
+</div>
+
+<nav>
+
+    <a href="home.html">Home</a>
+
+    <button
+        class="logout-btn"
+        onclick="logout()"
+    >
+        Logout
+    </button>
+
+</nav>
+
+
+<div class="card">
+
+    <h1 class="center">
+        📋 Health History
+    </h1>
+
+    <p class="subtitle">
+        Previous WaterCare assessments.
+    </p>
+
+
+    <div id="history"></div>
+
+
+    <div class="actions">
+
+        <button
+            class="btn danger"
+            onclick="clearHistory()"
+        >
+            Clear History
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+
+const history =
+    document.getElementById(
+        "history"
+    );
+
+
+function loadHistory() {
+
+    const storedResult =
+        localStorage.getItem(
+            "riskResult"
+        );
+
+
+    if (!storedResult) {
+
+        history.innerHTML =
+
+            "<p>"
+            + "No previous assessments found."
+            + "</p>";
+
+        return;
+    }
+
+
+    try {
+
+        const data =
+            JSON.parse(
+                storedResult
+            );
+
+
+        history.innerHTML =
+
+            "<div class=\"recommendation\">"
+
+            +
+
+            "<h3>"
+            + "📊 "
+            + data.riskLevel
+            + "</h3>"
+
+            +
+
+            "<p>"
+            + "<strong>Risk Score:</strong> "
+            + data.score
+            + "</p>"
+
+            +
+
+            "<p>"
+            + data.message
+            + "</p>"
+
+            +
+
+            "</div>";
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        history.innerHTML =
+
+            "<p>"
+            + "Unable to load assessment history."
+            + "</p>";
+    }
+}
+
+
+function clearHistory() {
+
+    localStorage.removeItem(
+        "riskResult"
+    );
+
+
+    loadHistory();
+}
+
+
+function logout() {
+
+    localStorage.removeItem(
+        "watercareLoggedIn"
+    );
+
+    localStorage.removeItem(
+        "watercareUserName"
+    );
+
+    localStorage.removeItem(
+        "riskResult"
+    );
+
+    window.location.href =
+        "thankyou.html";
+}
+
+
+loadHistory();
+
+</script>
+
